@@ -17,7 +17,7 @@ Servo myservo;
 // Additional Libraries - each one of these will need to be installed.
 // ----------------------------
 
-//#include <UniversalTelegramBot.h>
+
 #include "UniversalTelegramBot.h"  // use local library which is a modified copy of an old version
 // Library for interacting with the Telegram API
 // Search for "Telegegram" in the Library manager and install
@@ -42,19 +42,19 @@ int qualityconfig = 5;
 
 // Initialize Wifi connection to the router and Telegram BOT
 
-char ssid[] = "Ashoka";     // your network SSID (name)
-char password[] = "paaksyr1129"; // your network key
+char ssid[] = "abc";     // your network SSID (name)
+char password[] = "abc"; // your network key
 // https://sites.google.com/a/usapiens.com/opnode/time-zones  -- find your timezone here
 String TIMEZONE = "GMT0BST,M3.5.0/01,M10.5.0/02";
 
 // you can enter your home chat_id, so the device can send you a reboot message, otherwise it responds to the chat_id talking to telegram
 
-String chat_id = "1482243583";
-#define BOTtoken "6191053334:AAHWx5ed0Fe6ALk9uV7Jjd7lJe-KLT3Wj9c"  // your Bot Token (Get from Botfather)
+String chat_id = "abc";
+#define BOTtoken "abc"  // your Bot Token (Get from Botfather)
 
 // see here for information about getting free telegram credentials
 // https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot
-// https://randomnerdtutorials.com/telegram-esp32-motion-detection-arduino/
+
 
 bool reboot_request = false;
 
@@ -113,9 +113,6 @@ bool setupCamera() {
   }
 
 
-  //Serial.printf("Internal Total heap %d, internal Free Heap %d\n", ESP.getHeapSize(), ESP.getFreeHeap());
-  //Serial.printf("SPIRam Total heap   %d, SPIRam Free Heap   %d\n", ESP.getPsramSize(), ESP.getFreePsram());
-
   static char * memtmp = (char *) malloc(32 * 1024);
   static char * memtmp2 = (char *) malloc(32 * 1024); //32767
 
@@ -129,8 +126,6 @@ bool setupCamera() {
   memtmp2 = NULL;
   free(memtmp);
   memtmp = NULL;
-  //Serial.printf("Internal Total heap %d, internal Free Heap %d\n", ESP.getHeapSize(), ESP.getFreeHeap());
-  //Serial.printf("SPIRam Total heap   %d, SPIRam Free Heap   %d\n", ESP.getPsramSize(), ESP.getFreePsram());
 
   sensor_t * s = esp_camera_sensor_get();
 
@@ -229,8 +224,6 @@ char strftime_buf[64];
 
 
 void handleNewMessages(int numNewMessages) {
-  //Serial.println("handleNewMessages");
-  //Serial.println(String(numNewMessages));
 
   for (int i = 0; i < numNewMessages; i++) {
     chat_id = String(bot.messages[i].chat_id);
@@ -308,24 +301,12 @@ void handleNewMessages(int numNewMessages) {
       avi_enabled = true;
     }
 
-    /*
-    if (fb) {
-      esp_camera_fb_return(fb);
-      Serial.println("Return an fb ???");
-      if (fb) {
-        esp_camera_fb_return(fb);
-        Serial.println("Return another fb ?");
-      }
-    }
-    */
 
     for (int j = 0; j < 4; j++) {
     camera_fb_t * newfb = esp_camera_fb_get();
     if (!newfb) {
       Serial.println("Camera Capture Failed");
     } else {
-      //Serial.print("Pic, len="); Serial.print(newfb->len);
-      //Serial.printf(", new fb %X\n", (long)newfb->buf);
       esp_camera_fb_return(newfb);
       delay(10);
     }
@@ -375,8 +356,6 @@ void handleNewMessages(int numNewMessages) {
 
       fb = NULL;
 
-      //sensor_t * s = esp_camera_sensor_get();
-      //s->set_framesize(s, FRAMESIZE_VGA);
 
       Serial.println("\n\n\nSending VGA");
 
@@ -428,7 +407,7 @@ void handleNewMessages(int numNewMessages) {
       //xTaskCreatePinnedToCore( the_camera_loop, "the_camera_loop", 10000, NULL, 1, &the_camera_loop_task, 0);  //v8.5
 
       if ( the_camera_loop_task == NULL ) {
-        //vTaskDelete( xHandle );
+
         Serial.printf("do_the_steaming_task failed to start! %d\n", the_camera_loop_task);
       }
     }
@@ -437,7 +416,6 @@ void handleNewMessages(int numNewMessages) {
       String welcome = "ESP32Cam Telegram bot.\n\n";
       welcome += "/photo: take a photo\n";
       welcome += "/flash: toggle flash LED\n";
-      //welcome += "/caption: photo with caption\n";
       welcome += "/clip: short video clip\n";
       welcome += "\n Configure the clip\n";
       welcome += "/enable: enable pir\n";
@@ -447,8 +425,6 @@ void handleNewMessages(int numNewMessages) {
       welcome += "\n/fast: 25 fps - 3  sec - play .5x speed\n";
       welcome += "/med: 8  fps - 10 sec - play 1x speed\n";
       welcome += "/slow: 2  fps - 40 sec - play 5x speed\n";
-      //welcome += "\n/close: close door\n";
-      //welcome += "\n/open: open door\n";
       welcome += "\n/status: status\n";
       welcome += "/reboot: reboot\n";
       welcome += "/start: start\n";
